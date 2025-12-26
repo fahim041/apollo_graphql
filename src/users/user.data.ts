@@ -6,6 +6,7 @@ export let users: User[] = [
     name: 'John Doe',
     email: 'user1@gmail.com',
     age: 28,
+    password: '123456',
     createdAt: new Date().toISOString(),
   },
   {
@@ -13,6 +14,7 @@ export let users: User[] = [
     name: 'Jane Smith',
     email: 'user2@gmail.com',
     age: 34,
+    password: '123456',
     createdAt: new Date().toISOString(),
   },
   {
@@ -20,6 +22,7 @@ export let users: User[] = [
     name: 'Alice Johnson',
     email: 'user3@gmail.com',
     age: 25,
+    password: '123456',
     createdAt: new Date().toISOString(),
   }
 ];
