@@ -20,11 +20,15 @@ interface UpdateUserInput {
 
 export const userResolvers = {
   Query: {
-    users: () => {
+    users: (_parent: unknown, _args: unknown, context: Context) => {
+      requireAuth(context);
+      
       // Return users without password field
       return users.map(({ password, ...user }) => user);
     },
-    user: (_: any, { id }: { id: string }) => {
+    user: (_parent: unknown, { id }: { id: string }, context: Context) => {
+      requireAuth(context);
+      
       const user = users.find((user) => user.id === id);
 
       if (!user) {
@@ -38,7 +42,7 @@ export const userResolvers = {
       return userWithoutPassword;
     },
     usersByAge: (
-      _: any,
+      _parent: unknown,
       { minAge, maxAge }: { minAge?: number; maxAge?: number }
     ) => {
       const filteredUsers = users.filter((user) => {
@@ -52,7 +56,7 @@ export const userResolvers = {
     },
   },
   Mutation: {
-    createUser: async (_: any, { input }: { input: CreateUserInput }, context: Context) => {
+    createUser: async (_parent: unknown, { input }: { input: CreateUserInput }, context: Context) => {
       requireAuth(context); // Require authentication
 
       const newUser: User = {
@@ -71,7 +75,7 @@ export const userResolvers = {
       return userWithoutPassword;
     },
     updateUser: (
-      _: any,
+      _parent: unknown,
       { id, input }: { id: string; input: UpdateUserInput },
       context: Context
     ) => {
@@ -93,7 +97,7 @@ export const userResolvers = {
       const { password, ...userWithoutPassword } = users[userIndex];
       return userWithoutPassword;
     },
-    deleteUser: (_: any, { id }: { id: string }, context: Context) => {
+    deleteUser: (_parent: unknown, { id }: { id: string }, context: Context) => {
       requireAuth(context); // Require authentication
 
       const userIndex = users.findIndex((user) => user.id === id);
