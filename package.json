@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "npm run build && node ./dist/index.js",
-    "dev": "tsx watch ./src/index.ts"
+    "dev": "tsx watch --clear-screen=false src"
   },
   "keywords": [],
   "author": "",

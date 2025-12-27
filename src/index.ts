@@ -3,19 +3,23 @@ import { startStandaloneServer } from '@apollo/server/standalone';
 import { GraphQLError } from 'graphql';
 import { helloTypeDefs, helloResolvers } from './hello/index';
 import { userTypeDefs, userResolvers } from './users/index';
+import { authTypeDefs, authResolvers } from './auth/index';
 import { baseTypeDefs } from './schema/index';
+import { createContext } from './context';
 
 // Combine all type definitions
-const typeDefs = [baseTypeDefs, helloTypeDefs, userTypeDefs];
+const typeDefs = [baseTypeDefs, helloTypeDefs, userTypeDefs, authTypeDefs];
 
 // Combine all resolvers
 const resolvers = {
   Query: {
     ...helloResolvers.Query,
     ...userResolvers.Query,
+    ...authResolvers.Query,
   },
   Mutation: {
     ...userResolvers.Mutation,
+    ...authResolvers.Mutation,
   },
 };
 
@@ -38,6 +42,7 @@ const server = new ApolloServer({
 async function startServer() {
   const { url } = await startStandaloneServer(server, {
     listen: { port: 4000 },
+    context: createContext,
   });
 
   console.log(`Server ready at: ${url}`);
