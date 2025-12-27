@@ -4,8 +4,13 @@ import { GraphQLError } from 'graphql';
 import { helloTypeDefs, helloResolvers } from './hello/index';
 import { userTypeDefs, userResolvers } from './users/index';
 import { authTypeDefs, authResolvers } from './auth/index';
-import { baseTypeDefs } from './schema/index';
 import { createContext } from './context';
+
+// Base type definitions
+const baseTypeDefs = `#graphql
+  type Query
+  type Mutation
+`;
 
 // Combine all type definitions
 const typeDefs = [baseTypeDefs, helloTypeDefs, userTypeDefs, authTypeDefs];
